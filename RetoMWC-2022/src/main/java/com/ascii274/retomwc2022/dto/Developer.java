@@ -1,4 +1,4 @@
-package com.ascii274.reto.dto;
+package com.ascii274.retomwc2022.dto;
 
 public class Developer {
     private String nombre;
