@@ -1,1 +1,3 @@
 rootProject.name = 'NuweChallenges'
+include 'RetoMWC-2022'
+include 'MongoDB'
