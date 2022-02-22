@@ -1,7 +1,7 @@
 package com.ascii274.retomwc2022;
 
-import com.ascii274.retomwc2022.controller.DeveloperController;
-import com.ascii274.retomwc2022.helper.ConfigLogger;
+import com.ascii274.retomwc2022.repository.DeveloperRepository;
+import com.ascii274.retomwc2022.helper.MongoConnectDB;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
 import org.apache.commons.cli.CommandLine;
@@ -9,41 +9,59 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import static com.mongodb.client.model.Projections.*;
 import static com.mongodb.client.model.Projections.exclude;
+
+
 
 public class AppRetoMWC {
 
 	public static void main(String[] args) {
 
-		DeveloperController developerController = new DeveloperController();
+		DeveloperRepository developerController = new DeveloperRepository();
+		MongoConnectDB mongoConnectDB = new MongoConnectDB();
+
 		//ConfigLogger configLogger = new ConfigLogger(); // review JJJ
+		Logger.getLogger("org.mongodb.driver.connection").setLevel(Level.OFF);
+		Logger.getLogger("org.mongodb.driver.management").setLevel(Level.OFF);
+		Logger.getLogger("org.mongodb.driver.cluster").setLevel(Level.OFF);
+		Logger.getLogger("org.mongodb.driver.protocol.insert").setLevel(Level.OFF);
+		Logger.getLogger("org.mongodb.driver.protocol.query").setLevel(Level.OFF);
+		Logger.getLogger("org.mongodb.driver.protocol.update").setLevel(Level.OFF);
+//		logging.level.org.mongodb=warn;
+//		logging.level.org.springframework.boot.autoconfigure.mongo.embedded=warn;
+
+//		Logger logger = Logger.getLogger("org.mongodb.driver.cluster");
+//		logger.setLevel(Level.OFF);
+		Logger logger = Logger.getLogger("org.mongodb.driver");
+		logger.setLevel(Level.OFF);
+
 		try{
-
-			MongoClient client = MongoClients.create();
-			MongoDatabase database = client.getDatabase("db-developers");
-			MongoCollection<Document> developers = database.getCollection("developers");
-
 			Options options = new Options();
 			options.addOption("disday", "displayDay", false, "Display days" );
 			options.addOption("lisdev", "listDevelop", false, "Listing developers" );
 			options.addOption("addev", "adDevelop", false, "Adding developers" );
-
 			CommandLine line = new DefaultParser().parse(options,args);
 
 			if (line.hasOption("disday")){
-				getDays(developers);
+				getDays(mongoConnectDB.getDevelopers());
+
 			}
 
 			if (line.hasOption("lisdev")){
-				listDevelopers(developers);
+				listDevelopers(mongoConnectDB.getDevelopers());
 			}
 
 			if(line.hasOption("addev")){
-				developerController.insertDeveloper(developers,developerController.createDeveloper());
-				listDevelopers(developers);
+				developerController.insertDeveloper(mongoConnectDB.getDevelopers(), developerController.createDeveloper());
+				listDevelopers(mongoConnectDB.getDevelopers());
 
 			}
+
 
 		} catch (Exception e) {
 //            e.printStackTrace();

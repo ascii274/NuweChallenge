@@ -1,4 +1,4 @@
-package com.ascii274.retomwc2022.controller;
+package com.ascii274.retomwc2022.repository;
 
 import com.ascii274.retomwc2022.dto.Categoria;
 import com.ascii274.retomwc2022.dto.Developer;
@@ -8,7 +8,7 @@ import org.bson.Document;
 
 import java.util.Scanner;
 
-public class DeveloperController implements IDeveloperController{
+public class DeveloperRepository implements IDeveloperRepository {
 
     @Override
     public Developer createDeveloper() throws Exception{
