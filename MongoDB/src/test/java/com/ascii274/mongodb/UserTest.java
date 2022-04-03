@@ -2,7 +2,9 @@ package com.ascii274.mongodb;
 
 import com.ascii274.mongodb.config.MongoConfig;
 import com.ascii274.mongodb.dto.UserDto;
+import com.ascii274.mongodb.model.User;
 import com.ascii274.mongodb.repository.UserRepository;
+import com.ascii274.mongodb.service.UserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +31,18 @@ public class UserDtoTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Test
+//    private UserRepository userRepository;
+    private UserServiceImpl userServiceImpl;
+//   @Test
+   /*
     public void whenFindByName_thenReturnUserDto(){
-        UserDto userDto = new UserDto("test@mail.com","pwduserdtotest","User");
-        entityManager.persist(userDto);
+        User user = new User("test@mail.com",25,"Barcelona");
+        entityManager.persist(user);
         entityManager.flush();
-        UserDto found = userRepository.findByEmail(userDto.getEmail());
+        User found = userRepository.findByEmail(user.getEmail());
         assertThat(found.getEmail())
                 .isEqualTo(userDto.getEmail());
 
-    }
+    }*/
 
 }
