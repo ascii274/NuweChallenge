@@ -10,25 +10,19 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Getter
 @Setter
 @Data
-@Document(collection = "users")
 public class UserDto {
-    @Id
-    @Field(name="id")
-    private String id;
-    @Field(name="email")
-    private String email;
-    @Field(name="password")
-    private String password;
-    @Field(name="role")
-    private String role;
 
-    public UserDto(String email, String password, String role) {
-        this.email = email;
-        this.password = password;
-        this.role = role;
+    private Long id;
+
+    private String username;
+
+    public String getUsername() {
+        return username;
     }
 
-    public UserDto(){
-
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
+
+

@@ -1,7 +1,11 @@
 package com.ascii274.mongodb.service;
 
-import com.ascii274.mongodb.dto.UserDto;
+import com.ascii274.mongodb.model.User;
 
 public interface UserService {
-    public UserDto saveUserDto(UserDto userDto);
+    Boolean saveUser(User user);
+    Boolean deleteById(Long id);
+
+
+
 }
