@@ -24,7 +24,8 @@ public class User {
     @Field(name="city")
     private String city;
 
-    public User(String username, int age, String city) {
+    public User(Long id, String username, int age, String city) {
+        this.id = id;
         this.username = username;
         this.age = age;
         this.city = city;

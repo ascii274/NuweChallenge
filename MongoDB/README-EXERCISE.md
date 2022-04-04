@@ -8,8 +8,8 @@ Task 3 -> Hay un controlador para crear el usuario          -> Ok
 
 Task 4 -> Hay un controlador para borrar el usuario         -> Ok
 
-Task 5 -> Hay un controlador para devolver el usuario
+Task 5 -> Hay un controlador para devolver el usuario       -> Ok
 
-Task 6 -> Hay un controlador para actualizar el usuario
+Task 6 -> Hay un controlador para actualizar el usuario     -> Ok
 
-Task 7 -> Se puede levantar el servidor y realizar las acciones anteriores 
+Task 7 -> Se puede levantar el servidor y realizar las acciones anteriores -> Ok 
