@@ -37,7 +37,7 @@ public class UserController {
      * @return
      */
     @GetMapping(value = "/get-user/{username}")
-    public User getUser(@PathVariable("username") String username){
+    public List<User> getUser(@PathVariable("username") String username){
         return   userServiceImpl.findByUsername(username);
     }
 
@@ -81,8 +81,5 @@ public class UserController {
         }
 
     }
-
-
-
 
 }

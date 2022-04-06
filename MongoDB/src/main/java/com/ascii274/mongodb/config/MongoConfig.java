@@ -5,8 +5,11 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 @Configuration
 public class MongoConfig extends AbstractMongoClientConfiguration {
@@ -14,9 +17,11 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     @Autowired
     MongoProperties mongoProperties;
 
+    @Autowired
+    private Environment env;
+
     @Override
     protected String getDatabaseName() {
-//        return "babcn-users";
         return mongoProperties.getDatabase();
     }
 
@@ -27,8 +32,14 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
                 .applyConnectionString(connectionString)
                 .build();
         return MongoClients.create(mongoClientSettings);
-
     }
 
+/*
+
+    @Bean
+    public MongoTemplate mongoTemplate() throws Exception {
+        return new MongoTemplate(mongoClient(), env.getProperty("spring.data.mongodb.database"));
+    }
+*/
 
 }
