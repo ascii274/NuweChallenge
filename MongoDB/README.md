@@ -5,9 +5,6 @@
 
 Ejecutar los siguientes endpoints en postman.
 
-> Test
-- http<no-link>://localhost:8762/nuwechallenges/api/v1/mongodb/test
-- 
 > get-user
 - http<no-link>://localhost:8762/nuwechallenges/api/v1/mongodb/get-user/{username}
 

@@ -1,3 +1,4 @@
 rootProject.name = 'NuweChallenges'
+include 'CSVToJson'
 include 'RetoMWC-2022'
 include 'MongoDB'
