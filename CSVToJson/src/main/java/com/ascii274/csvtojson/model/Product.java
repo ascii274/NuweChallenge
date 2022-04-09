@@ -5,11 +5,13 @@ import com.opencsv.bean.CsvBindByName;
 
 public class Product {
 
-    @CsvBindByName
+    @CsvBindByName(column = "code")
     private int code;
-    @CsvBindByName
+
+    @CsvBindByName(column = "product")
     private String product;
-    @CsvBindByName
+
+    @CsvBindByName(column = "price")
     private Double price;
 
     public int getCode() {
