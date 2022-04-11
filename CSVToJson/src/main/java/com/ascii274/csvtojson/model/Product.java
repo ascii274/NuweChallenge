@@ -1,17 +1,11 @@
 package com.ascii274.csvtojson.model;
 
-import com.opencsv.bean.CsvBindByName;
-
-
 public class Product {
 
-    @CsvBindByName(column = "code")
     private int code;
 
-    @CsvBindByName(column = "product")
     private String product;
 
-    @CsvBindByName(column = "price")
     private Double price;
 
     public int getCode() {

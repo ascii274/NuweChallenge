@@ -12,6 +12,11 @@
     # Clone
     clone https://github.com/jcabatay/NuweChallenges.git    
     
+     # branch 
+    develop       
+    
+    # jdk 
+    17 
 ```
 
 ## Contact info
