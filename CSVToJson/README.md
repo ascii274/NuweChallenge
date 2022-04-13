@@ -4,6 +4,17 @@
 
 ## Usage
 
+Ejecutar los siguientes endpoints en postman.
+
+> /get-one-column/{column}
+- http<no-link>://localhost:8762/nuwechallenges/api/v1/csvtojson/get-one-column/1
+
+> /get-more-column
+- http<no-link>://localhost:8762/nuwechallenges/api/v1/csvtojson/get-more-column
+- put body json parameter: 
+ {
+  "columns": [1,2]
+  }
 
 
 ## Installation
