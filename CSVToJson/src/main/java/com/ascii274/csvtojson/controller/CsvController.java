@@ -1,5 +1,6 @@
 package com.ascii274.csvtojson.controller;
 
+import com.ascii274.csvtojson.model.CSVColumn;
 import com.ascii274.csvtojson.model.Product;
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -71,7 +72,44 @@ public class CsvController {
     }
 
     /**
+     * Show columns from 1 to 3.
+     *
+     * @param columns
+     * @return
+     */
+    @GetMapping(value="/get-more-column")
+    public List<String> getSomeColumns(@RequestBody CSVColumn columns){
+        List<String> lista = new ArrayList<>();
+        try(
+                BufferedReader br = new BufferedReader(new FileReader(fileName));
+                CSVParser parser = CSVFormat.DEFAULT.builder()
+//                        .setDelimiter(",")
+//                        .setHeader() //Sets the header to the given values.
+                        .build()
+                        .parse(br);
+        ) {
+                for(CSVRecord record : parser) {
+                    if(columns.getColumns().size()==1)
+                    {
+                        lista.add(record.get( columns.getColumns().get(0) ));
+                    }
+                    if(columns.getColumns().size()==2){
+                        lista.add(record.get( columns.getColumns().get(0) ) + " " + record.get(columns.getColumns().get(1)) );
+                    }
+                    if(columns.getColumns().size()==3){
+                        lista.add(record.get( columns.getColumns().get(0) ) + " " + record.get(columns.getColumns().get(1)) + " " + record.get(columns.getColumns().get(2)) );
+                    }
+                }
+        } catch (Exception e) {
+            logger.error(e.getMessage() );
+            return getColumnDefault();
+        }
+        return lista;
+    }
+
+    /**
      * Default List<String> to return when column produce outbound
+     *
      * @return
      */
     private List<String> getColumnDefault(){
