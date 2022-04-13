@@ -83,8 +83,8 @@ public class CsvController {
         try(
                 BufferedReader br = new BufferedReader(new FileReader(fileName));
                 CSVParser parser = CSVFormat.DEFAULT.builder()
-//                        .setDelimiter(",")
-//                        .setHeader() //Sets the header to the given values.
+                        .setDelimiter(",")
+                        .setHeader() //no header.
                         .build()
                         .parse(br);
         ) {
@@ -97,7 +97,7 @@ public class CsvController {
                         lista.add(record.get( columns.getColumns().get(0) ) + " " + record.get(columns.getColumns().get(1)) );
                     }
                     if(columns.getColumns().size()==3){
-                        lista.add(record.get( columns.getColumns().get(0) ) + " " + record.get(columns.getColumns().get(1)) + " " + record.get(columns.getColumns().get(2)) );
+                        lista.add( Integer.parseInt( record.get( columns.getColumns().get(0) )) + " " + record.get(columns.getColumns().get(1)) + " " + Double.parseDouble(record.get(columns.getColumns().get(2))) );
                     }
                 }
         } catch (Exception e) {
