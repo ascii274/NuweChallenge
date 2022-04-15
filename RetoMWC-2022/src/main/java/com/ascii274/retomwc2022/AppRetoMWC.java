@@ -1,7 +1,10 @@
 package com.ascii274.retomwc2022;
 
-import com.ascii274.retomwc2022.repository.DeveloperRepository;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.LoggerContext;
 import com.ascii274.retomwc2022.helper.MongoConnectDB;
+import com.ascii274.retomwc2022.repository.DeveloperRepository;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
 import org.apache.commons.cli.CommandLine;
@@ -9,38 +12,26 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import org.slf4j.LoggerFactory;
 import static com.mongodb.client.model.Projections.*;
 import static com.mongodb.client.model.Projections.exclude;
-
-
 
 public class AppRetoMWC {
 
 	public static void main(String[] args) {
 
-		DeveloperRepository developerController = new DeveloperRepository();
+		DeveloperRepository developerRepository = new DeveloperRepository();
 		MongoConnectDB mongoConnectDB = new MongoConnectDB();
 
-		//ConfigLogger configLogger = new ConfigLogger(); // review JJJ
-		Logger.getLogger("org.mongodb.driver.connection").setLevel(Level.OFF);
-		Logger.getLogger("org.mongodb.driver.management").setLevel(Level.OFF);
-		Logger.getLogger("org.mongodb.driver.cluster").setLevel(Level.OFF);
-		Logger.getLogger("org.mongodb.driver.protocol.insert").setLevel(Level.OFF);
-		Logger.getLogger("org.mongodb.driver.protocol.query").setLevel(Level.OFF);
-		Logger.getLogger("org.mongodb.driver.protocol.update").setLevel(Level.OFF);
-//		logging.level.org.mongodb=warn;
-//		logging.level.org.springframework.boot.autoconfigure.mongo.embedded=warn;
-
-//		Logger logger = Logger.getLogger("org.mongodb.driver.cluster");
-//		logger.setLevel(Level.OFF);
-		Logger logger = Logger.getLogger("org.mongodb.driver");
-		logger.setLevel(Level.OFF);
+		// disable mongo logging
+		LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+		Logger rootLogger = loggerContext.getLogger("org.mongodb.driver");
+		rootLogger.setLevel(Level.OFF);
 
 		try{
+			MongoClient client = MongoClients.create();
+			MongoDatabase database = client.getDatabase("nuwe-db");
+			MongoCollection<Document> developers = database.getCollection("developers");
 			Options options = new Options();
 			options.addOption("disday", "displayDay", false, "Display days" );
 			options.addOption("lisdev", "listDevelop", false, "Listing developers" );
@@ -57,8 +48,7 @@ public class AppRetoMWC {
 			}
 
 			if(line.hasOption("addev")){
-				developerController.insertDeveloper(mongoConnectDB.getDevelopers(), developerController.createDeveloper());
-				listDevelopers(mongoConnectDB.getDevelopers());
+				developerRepository.insertDeveloper(mongoConnectDB.getDevelopers(), developerRepository.createDeveloper());
 
 			}
 
@@ -102,6 +92,5 @@ public class AppRetoMWC {
 			cursor.close();
 		}
 	}
-
 
 }

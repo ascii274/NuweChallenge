@@ -61,16 +61,18 @@ public class DeveloperRepository implements IDeveloperRepository {
 
         switch (categoriaString.trim()){
             case "0": //Front:
-                categoria = Categoria.Front;
+                categoria = Categoria.FRONT;
                 break;
             case "1": //Back
-                categoria = Categoria.Back;
+                categoria = Categoria.BACK;
                 break;
             case "2": //Mobile
-                categoria = Categoria.Mobile;
+                categoria = Categoria.MOBILE;
                 break;
             case "3": //Data
-                categoria = Categoria.Data;
+                categoria = Categoria.DATA;
+                break;
+            default: // empty
                 break;
         }
         return categoria;
