@@ -1,17 +1,21 @@
 package com.ascii274.retomwc2022.repository;
 
-import com.ascii274.retomwc2022.dto.Categoria;
-import com.ascii274.retomwc2022.dto.Developer;
+import com.ascii274.retomwc2022.exception.DeveloperException;
+import com.ascii274.retomwc2022.model.Categoria;
+import com.ascii274.retomwc2022.model.Developer;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
+import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
 public class DeveloperRepository implements IDeveloperRepository {
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(DeveloperRepository.class);
 
     @Override
-    public Developer createDeveloper() throws Exception{
+    public Developer createDeveloper() throws DeveloperException {
         Developer developer;
         Categoria categoria;
 
@@ -29,9 +33,13 @@ public class DeveloperRepository implements IDeveloperRepository {
         System.out.println("Introduzca fecha: (Ejemplo: Abr 1,2021)");
         String date = scanner.nextLine();
 
-        categoria = getCategory(categoriaString);
+        try {
+            categoria = getCategory(categoriaString);
+        } catch (Exception e) {
+            throw new DeveloperException("Error al obtener categoria");
+        }
         developer = new Developer(name,email,categoria,phone,date);
-        System.out.println(developer.toString()); //TODO delete JJJ
+        log.info(developer.toString());
         return developer;
 
     }
@@ -43,21 +51,23 @@ public class DeveloperRepository implements IDeveloperRepository {
      * @throws Exception
      */
     @Override
-    public void insertDeveloper(MongoCollection<Document> developers, Developer developer) throws Exception {
+    public void insertDeveloper(MongoCollection<Document> developers, Developer developer) throws DeveloperException {
         ObjectMapper mapper = new ObjectMapper();
         final Document wrapper = new Document();
-//        Document doc = new Document();
-        String json = mapper.writeValueAsString(developer);
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(developer);
+        } catch (JsonProcessingException e) {
+            throw new DeveloperException("Error al pasar developer a json " + developer);
+        }
         wrapper.append("developer",json);
         developers.insertOne(Document.parse(json));
-
     }
 
 
     @Override
-    public Categoria getCategory(String categoriaString) throws Exception {
+    public Categoria getCategory(String categoriaString) {
         Categoria categoria = null;
-        if(categoriaString ==null) throw new Exception("Error al seleccionar categoria");
 
         switch (categoriaString.trim()){
             case "0": //Front:
@@ -77,6 +87,5 @@ public class DeveloperRepository implements IDeveloperRepository {
         }
         return categoria;
     }
-
 
 }

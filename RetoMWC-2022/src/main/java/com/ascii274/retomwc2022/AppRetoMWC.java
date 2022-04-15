@@ -17,6 +17,7 @@ import static com.mongodb.client.model.Projections.*;
 import static com.mongodb.client.model.Projections.exclude;
 
 public class AppRetoMWC {
+	private static final org.slf4j.Logger log = LoggerFactory.getLogger(AppRetoMWC.class);
 
 	public static void main(String[] args) {
 
@@ -29,9 +30,7 @@ public class AppRetoMWC {
 		rootLogger.setLevel(Level.OFF);
 
 		try{
-			MongoClient client = MongoClients.create();
-			MongoDatabase database = client.getDatabase("nuwe-db");
-			MongoCollection<Document> developers = database.getCollection("developers");
+
 			Options options = new Options();
 			options.addOption("disday", "displayDay", false, "Display days" );
 			options.addOption("lisdev", "listDevelop", false, "Listing developers" );
@@ -40,7 +39,6 @@ public class AppRetoMWC {
 
 			if (line.hasOption("disday")){
 				getDays(mongoConnectDB.getDevelopers());
-
 			}
 
 			if (line.hasOption("lisdev")){
@@ -49,17 +47,17 @@ public class AppRetoMWC {
 
 			if(line.hasOption("addev")){
 				developerRepository.insertDeveloper(mongoConnectDB.getDevelopers(), developerRepository.createDeveloper());
-
 			}
 
-
 		} catch (Exception e) {
-//            e.printStackTrace();
-			System.out.println(e.getMessage());
+			log.info("Error al crear el comandline"+ e.getMessage());
 		}
 	}
 
-	//lambda version
+	/**
+	 * - Listing date
+	 * @param developers
+	 */
 	private static void getDays(MongoCollection<Document> developers) {
 		Bson filter = Filters.empty();
 		Bson projection = fields(include("date"), exclude("_id"));
@@ -67,11 +65,14 @@ public class AppRetoMWC {
 		developers.find(filter).projection(projection).forEach(doc -> System.out.println(doc.toString()));
 	}
 
-	private static void getDays_2(MongoCollection<Document> developers) {
-		Bson filter = Filters.empty();
-		Bson projection = fields(include("date"), exclude("_id"));
-		System.out.println("******************* Lista fechas ******************************");
-		MongoCursor<Document> cursor= developers.find(filter).projection(projection).iterator();
+	/**
+	 * Listing developers data
+	 * @param developers
+	 */
+
+	private static void listDevelopers(MongoCollection<Document> developers) {
+		System.out.println("******************* Lista developers ******************************");
+		MongoCursor<Document> cursor = developers.find().iterator();
 		try{
 			while (cursor.hasNext()){
 				System.out.println(cursor.next().toString());
@@ -81,9 +82,16 @@ public class AppRetoMWC {
 		}
 	}
 
-	private static void listDevelopers(MongoCollection<Document> developers) {
-		System.out.println("******************* Lista developers ******************************");
-		MongoCursor<Document> cursor = developers.find().iterator();
+	/**
+	 * - Functional NOT IMPLEMENTED
+	 *
+	 * @param developers
+	 */
+	private static void getDays_2(MongoCollection<Document> developers) {
+		Bson filter = Filters.empty();
+		Bson projection = fields(include("date"), exclude("_id"));
+		System.out.println("******************* Lista fechas ******************************");
+		MongoCursor<Document> cursor= developers.find(filter).projection(projection).iterator();
 		try{
 			while (cursor.hasNext()){
 				System.out.println(cursor.next().toString());
