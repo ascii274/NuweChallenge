@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value="/nuwechallenges/api/v1/csvtojson")
 public class CsvController {
-    final static Logger logger = LoggerFactory.getLogger(CsvController.class);
+    private final static Logger logger = LoggerFactory.getLogger(CsvController.class);
     private static String fileName = "CSVToJson/build/resources/main/csv/restaurant.csv";
 
     @GetMapping(value="/test")
@@ -60,9 +60,9 @@ public class CsvController {
                         .build()
                         .parse(br);
         ) {
-            for(CSVRecord record : parser) {
+            for(CSVRecord csvRecord : parser) {
                 //columns values -> 0: code 1:product 2:price
-                lista.add(record.get(column) );
+                lista.add(csvRecord.get(column) );
             }
         } catch (Exception e) {
             logger.error(e.getMessage() );
@@ -88,16 +88,16 @@ public class CsvController {
                         .build()
                         .parse(br);
         ) {
-                for(CSVRecord record : parser) {
+                for(CSVRecord csvRecord : parser) {
                     if(columns.getColumns().size()==1)
                     {
-                        lista.add(record.get( columns.getColumns().get(0) ));
+                        lista.add(csvRecord.get( columns.getColumns().get(0) ));
                     }
                     if(columns.getColumns().size()==2){
-                        lista.add(record.get( columns.getColumns().get(0) ) + " " + record.get(columns.getColumns().get(1)) );
+                        lista.add(csvRecord.get( columns.getColumns().get(0) ) + " " + csvRecord.get(columns.getColumns().get(1)) );
                     }
                     if(columns.getColumns().size()==3){
-                        lista.add( Integer.parseInt( record.get( columns.getColumns().get(0) )) + " " + record.get(columns.getColumns().get(1)) + " " + Double.parseDouble(record.get(columns.getColumns().get(2))) );
+                        lista.add( Integer.parseInt( csvRecord.get( columns.getColumns().get(0) )) + " " + csvRecord.get(columns.getColumns().get(1)) + " " + Double.parseDouble(csvRecord.get(columns.getColumns().get(2))) );
                     }
                 }
         } catch (Exception e) {

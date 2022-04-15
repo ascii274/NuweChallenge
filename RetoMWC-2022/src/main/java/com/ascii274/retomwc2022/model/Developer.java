@@ -1,68 +1,68 @@
-package com.ascii274.retomwc2022.dto;
+package com.ascii274.retomwc2022.model;
 
 public class Developer {
-    private String nombre;
-    private String correo;
-    private Categoria categoria;
-    private String telefono;
-    private String fecha;
+    private String name;
+    private String email;
+    private Categoria category;
+    private String phone;
+    private String date;
 
-    public Developer(String nombre, String correo, Categoria categoria, String telefono, String fecha) {
-        this.nombre = nombre;
-        this.correo = correo;
-        this.categoria = categoria;
-        this.telefono = telefono;
-        this.fecha = fecha;
+    public Developer(String name, String email, Categoria category, String phone, String date) {
+        this.name = name;
+        this.email = email;
+        this.category = category;
+        this.phone = phone;
+        this.date = date;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public Categoria getCategory() {
+        return category;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategory(Categoria category) {
+        this.category = category;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getFecha() {
-        return fecha;
+    public String getDate() {
+        return date;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override
     public String toString() {
-        return "Developer [" +
-                "nombre='" + nombre + '\'' +
-                ", correo='" + correo + '\'' +
-                ", categoria=" + categoria +
-                ", telefono='" + telefono + '\'' +
-                ", fecha='" + fecha + '\'' +
-                ']';
+        return "Developer{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", category=" + category +
+                ", phone='" + phone + '\'' +
+                ", date='" + date + '\'' +
+                '}';
     }
 }

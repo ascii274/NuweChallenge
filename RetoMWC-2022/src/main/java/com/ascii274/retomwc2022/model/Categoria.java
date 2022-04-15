@@ -1,4 +1,4 @@
-package com.ascii274.retomwc2022.dto;
+package com.ascii274.retomwc2022.model;
 
 public enum Categoria {
     FRONT,

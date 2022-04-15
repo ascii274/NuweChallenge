@@ -4,7 +4,7 @@ public class Product {
 
     private int code;
 
-    private String product;
+    private String productName;
 
     private Double price;
 
@@ -16,12 +16,12 @@ public class Product {
         this.code = code;
     }
 
-    public String getProduct() {
-        return product;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProduct(String product) {
-        this.product = product;
+    public void setProductName(String product) {
+        this.productName = product;
     }
 
     public Double getPrice() {
@@ -36,7 +36,7 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "code=" + code +
-                ", product='" + product + '\'' +
+                ", product='" + productName + '\'' +
                 ", price=" + price +
                 '}';
     }
